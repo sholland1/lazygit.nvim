@@ -114,6 +114,30 @@ local function lazygit(path)
   exec_lazygit_command(cmd)
 end
 
+--- :LazyGitDotfiles
+local function lazygitdotfiles()
+  if is_lazygit_available() ~= true then
+    print("Please install lazygit. Check documentation for more information")
+    return
+  end
+
+  prev_win = vim.api.nvim_get_current_win()
+
+  win, buffer = open_floating_window()
+
+  local cmd = 'lazygit --git-dir="$HOME/dotfiles.git" --work-tree="$HOME"'
+
+  if vim.g.lazygit_use_custom_config_file_path == 1 then
+    local config_path = lazygitgetconfigpath()
+    if type(config_path) == "table" then
+     config_path = table.concat(config_path, ",")
+    end
+    cmd = cmd .. " -ucf '" .. config_path .. "'" -- quote config_path to avoid whitespace errors
+  end
+
+  exec_lazygit_command(cmd)
+end
+
 --- :LazyGitCurrentFile entry point
 local function lazygitcurrentfile()
   local current_dir = vim.fn.expand("%:p:h")
@@ -167,5 +191,5 @@ return {
   lazygitfiltercurrentfile = lazygitfiltercurrentfile,
   lazygitconfig = lazygitconfig,
   project_root_dir = project_root_dir,
-  exec_lazygit_command = exec_lazygit_command,
+  lazygitdotfiles = lazygitdotfiles,
 }
