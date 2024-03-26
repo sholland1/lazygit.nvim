@@ -167,4 +167,5 @@ return {
   lazygitfiltercurrentfile = lazygitfiltercurrentfile,
   lazygitconfig = lazygitconfig,
   project_root_dir = project_root_dir,
+  exec_lazygit_command = exec_lazygit_command,
 }
