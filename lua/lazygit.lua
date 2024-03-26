@@ -7,6 +7,7 @@ local open_or_create_config = require("lazygit.utils").open_or_create_config
 
 local fn = vim.fn
 
+---@type (nil|integer)
 LAZYGIT_BUFFER = nil
 LAZYGIT_LOADED = false
 vim.g.lazygit_opened = 0
@@ -15,7 +16,7 @@ local win = -1
 local buffer = -1
 
 --- on_exit callback function to delete the open buffer when lazygit exits in a neovim terminal
-local function on_exit(job_id, code, event)
+local function on_exit(job_id, code, event)---@diagnostic disable-line: unused-local
   if code ~= 0 then
     return
   end
